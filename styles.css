@@ -1,0 +1,231 @@
+/* Matthew Leahy — portfolio
+   One idea: the work is loud, so the page is quiet.
+   Dark neutral wall, one accent colour borrowed from FERAL. */
+
+:root {
+  --bg: #000;
+  --tile: #17171a;
+  --paper: #f4f2ec;
+  --fg: #f1efe9;
+  --muted: #a09d95;
+  --line: #2a2a2e;      /* outlines: pill buttons, About table rows */
+  --divider: #000;      /* lines between sections and under the top bar */
+  --accent: #c8ff4d;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --gap: clamp(8px, 1.2vw, 14px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 400 1rem/1.6 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+p { margin: 0 0 1em; }
+h1, h2 { margin: 0; font-weight: 650; letter-spacing: -0.025em; line-height: 1.05; text-wrap: balance; }
+figure { margin: 0; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.wrap { width: 100%; max-width: 1320px; margin-inline: auto; padding-inline: clamp(16px, 3.6vw, 48px); }
+
+/* ── Top bar ── */
+.top {
+  position: sticky; top: 0; z-index: 10;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--divider);
+}
+.top-row { display: flex; align-items: center; justify-content: space-between; min-height: 56px; gap: 16px; }
+.name { font-weight: 650; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; }
+.top nav { display: flex; align-items: center; gap: clamp(14px, 3vw, 28px); font-size: 0.94rem; }
+.top nav a { text-decoration: none; color: var(--muted); padding-block: 8px; }
+.top nav a:hover { color: var(--fg); }
+.top nav .cta {
+  color: var(--bg); background: var(--accent);
+  padding: 7px 16px; border-radius: 999px; font-weight: 600;
+}
+.top nav .cta:hover { color: var(--bg); filter: brightness(1.08); }
+
+/* ── Intro ── */
+.intro {
+  display: grid; grid-template-columns: auto minmax(0, 34rem);
+  justify-content: space-between; align-items: end;
+  gap: 16px clamp(24px, 6vw, 96px);
+  padding-block: clamp(28px, 5vw, 64px) clamp(20px, 3vw, 36px);
+}
+.intro h1 { font-size: clamp(2.6rem, 8vw, 6rem); }
+.lede { margin: 0; font-size: clamp(1.05rem, 1.5vw, 1.25rem); line-height: 1.45; color: var(--fg); }
+.status {
+  display: flex; align-items: center; gap: 9px; margin: 14px 0 0;
+  font: 500 0.8rem/1.4 var(--mono); letter-spacing: .02em; color: var(--accent);
+}
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex: none; }
+
+/* ── Video facade: a poster that becomes the player on click ── */
+.video {
+  position: relative; display: block; width: 100%;
+  background: #000; border-radius: 6px; overflow: hidden;
+  text-decoration: none; cursor: pointer;
+}
+.video img, .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border: 0; }
+.video img { transition: transform .5s ease, opacity .3s ease; }
+.video:hover img { transform: scale(1.015); opacity: .92; }
+.play {
+  position: absolute; left: 50%; top: 50%; translate: -50% -50%;
+  width: clamp(56px, 9vw, 92px); aspect-ratio: 1; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 6px 30px rgb(0 0 0 / .45);
+  transition: scale .2s ease;
+}
+.play::after {
+  content: ""; position: absolute; left: 53%; top: 50%; translate: -50% -50%;
+  border-style: solid; border-color: transparent transparent transparent var(--bg);
+  border-width: 0.75em 0 0.75em 1.2em; font-size: clamp(14px, 2.2vw, 22px);
+}
+.video:hover .play { scale: 1.08; }
+.runtime {
+  position: absolute; left: 14px; bottom: 14px;
+  font: 500 0.78rem/1 var(--mono); letter-spacing: .02em;
+  color: var(--fg); background: rgb(0 0 0 / .62); padding: 8px 10px; border-radius: 4px;
+}
+
+.hero-caption {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 32px;
+  padding-block: 14px 22px;
+  font-size: 0.95rem; color: var(--muted);
+}
+.jump { display: flex; flex-wrap: wrap; gap: 8px; padding-bottom: clamp(40px, 7vw, 88px); }
+.jump a {
+  font: 400 0.8rem/1 var(--mono); letter-spacing: .02em; text-decoration: none;
+  color: var(--fg); border: 1px solid var(--line); border-radius: 999px; padding: 10px 14px;
+}
+.jump a:hover { border-color: var(--accent); color: var(--accent); }
+.hero-caption p { margin: 0; }
+.hero-caption strong { color: var(--fg); font-weight: 650; }
+
+/* ── Projects ── */
+.project {
+  display: grid; grid-template-columns: minmax(220px, 300px) minmax(0, 1fr);
+  gap: clamp(24px, 4.5vw, 72px);
+  padding-block: clamp(48px, 8vw, 104px);
+  border-top: 1px solid var(--divider);
+}
+.meta { position: sticky; top: 88px; align-self: start; }
+.meta h2 { font-size: clamp(1.8rem, 3.2vw, 2.5rem); margin-bottom: 10px; }
+.meta p { color: var(--muted); font-size: 0.97rem; max-width: 34rem; }
+.meta .role { color: var(--fg); font-weight: 550; margin-bottom: 14px; }
+.kicker, .tools, .laurels, figcaption, .note {
+  font: 400 0.78rem/1.55 var(--mono); letter-spacing: .02em; color: var(--muted);
+}
+.kicker { margin-bottom: 14px; text-transform: uppercase; letter-spacing: .08em; }
+.meta .tools, .meta .laurels { font-size: 0.78rem; }
+.laurels, .meta .laurels { color: var(--accent); }
+.text-link { color: var(--fg); text-underline-offset: 4px; text-decoration-color: var(--muted); }
+.text-link:hover { text-decoration-color: var(--accent); }
+
+.media { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gap); align-items: start; }
+.c12 { grid-column: span 12; }
+.c8  { grid-column: span 8; }
+.c6  { grid-column: span 6; }
+.c4  { grid-column: span 4; }
+.c3  { grid-column: span 3; }
+.media img { width: 100%; border-radius: 4px; background: var(--tile); }
+.zoom { display: block; cursor: zoom-in; border-radius: 4px; overflow: hidden; }
+.zoom img { transition: opacity .2s ease; }
+.zoom:hover img { opacity: .88; }
+.tile img { background: var(--tile); }
+.loop img { background: #000; }
+.pixel { image-rendering: pixelated; }
+figcaption { margin-top: 8px; }
+.note { margin: 0 0 clamp(10px, 2vw, 20px); display: flex; align-items: center; gap: 12px; }
+.media .sprite { width: 22px; height: auto; background: none; border-radius: 0; flex: none; }
+.stack { display: grid; gap: var(--gap); }
+/* Even rows: --r is each item's width ÷ height. Sharing the row's width in that
+   proportion makes every item in the row come out the same height. */
+.row, .pair { display: flex; gap: var(--gap); align-items: flex-start; }
+.row { grid-column: span 12; }
+.row > *, .pair > * { flex: var(--r, 1) 1 0; min-width: 0; }
+.row.fill { align-items: stretch; }
+.row.fill > .zoom img { height: 100%; object-fit: cover; }
+
+/* ── About ── */
+.about {
+  display: grid; grid-template-columns: minmax(140px, 300px) minmax(0, 1fr);
+  gap: clamp(24px, 4.5vw, 72px); align-items: start;
+  padding-block: clamp(48px, 8vw, 104px);
+  border-top: 1px solid var(--divider);
+}
+.avatar { width: 100%; max-width: 300px; border-radius: 6px; }
+.bio { max-width: 42rem; }
+.bio h2 { font-size: clamp(1.8rem, 3.2vw, 2.5rem); margin-bottom: 18px; }
+.bio p { font-size: 1.08rem; }
+.facts { margin: 28px 0 0; border-top: 1px solid var(--line); }
+.facts div { display: grid; grid-template-columns: 7.5rem 1fr; gap: 12px; padding-block: 12px; border-bottom: 1px solid var(--line); }
+.facts dt { font: 400 0.78rem/1.9 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.facts dd { margin: 0; }
+
+/* ── Contact ── */
+.contact { padding-block: clamp(48px, 8vw, 104px); border-top: 1px solid var(--divider); }
+.email {
+  display: inline-block; font-size: clamp(1.5rem, 6.4vw, 4.5rem); font-weight: 650;
+  letter-spacing: -0.03em; line-height: 1.1; text-decoration: none; overflow-wrap: anywhere;
+  border-bottom: 3px solid var(--accent); padding-bottom: 4px;
+}
+.email:hover { color: var(--accent); }
+.links { margin: 28px 0 0; display: flex; flex-wrap: wrap; gap: 10px 28px; }
+.links a { color: var(--muted); text-underline-offset: 4px; }
+.links a:hover { color: var(--fg); }
+
+/* Sign-off banner: on narrow screens it crops to the lettering instead of shrinking */
+.signoff { padding-bottom: clamp(40px, 6vw, 72px); }
+.signoff img { width: 100%; height: clamp(84px, 12.3vw, 150px); object-fit: cover; object-position: center; border-radius: 6px; }
+
+.foot { padding-block: 28px 40px; border-top: 1px solid var(--divider); color: var(--muted); font-size: 0.85rem; }
+.foot p { margin: 0; }
+
+/* ── Lightbox ── */
+#lightbox {
+  border: 0; padding: 0; margin: 0; background: transparent;
+  width: 100vw; height: 100dvh; max-width: none; max-height: none;
+  cursor: zoom-out;
+}
+#lightbox[open] { display: grid; place-items: center; }
+#lightbox::backdrop { background: rgb(0 0 0 / .94); }
+#lightbox img { max-width: 96vw; max-height: 94dvh; width: auto; height: auto; object-fit: contain; }
+
+/* ── Small screens ── */
+@media (max-width: 860px) {
+  .intro { grid-template-columns: 1fr; align-items: start; }
+  .project, .about { grid-template-columns: 1fr; }
+  .meta { position: static; }
+  .about .avatar { max-width: 160px; }
+  .c8, .c6, .c4, .c3 { grid-column: span 12; }
+  /* On phones a row may wrap onto two lines; each line still ends level. */
+  .row { flex-wrap: wrap; }
+  .row > * { flex-basis: calc(var(--r, 1) * var(--k, 45%)); }
+  .m12 { grid-column: span 12; }
+  .m6 { grid-column: span 6; }
+  .m4 { grid-column: span 4; }
+  .hero-caption { flex-direction: column; }
+}
+/* Phones: the bar keeps only what earns its place. The page opens on the
+   work, so the "Work" link goes; name, About and Email stay. */
+@media (max-width: 480px) {
+  .top nav { gap: 18px; }
+  .top nav a[href="#work"] { display: none; }
+  .top nav .cta { padding: 6px 14px; }
+}
+@media (max-width: 420px) {
+  .facts div { grid-template-columns: 1fr; gap: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
