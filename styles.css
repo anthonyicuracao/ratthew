@@ -196,8 +196,9 @@ figcaption { margin-top: 8px; }
   cursor: zoom-out;
 }
 #lightbox[open] { display: grid; place-items: center; }
-#lightbox::backdrop { background: rgb(0 0 0 / .94); }
+#lightbox::backdrop { background: #000; }   /* solid, so nothing shows through see-through artwork */
 #lightbox img { max-width: 96vw; max-height: 94dvh; width: auto; height: auto; object-fit: contain; }
+#lightbox img.fit { width: 96vw; height: 94dvh; }   /* animation loops are small files: enlarge them to fill the screen */
 
 /* ── Small screens ── */
 @media (max-width: 860px) {

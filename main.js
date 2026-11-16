@@ -28,6 +28,7 @@ document.addEventListener('click', (event) => {
     const big = lightbox.querySelector('img');
     big.src = zoom.href;
     big.alt = zoom.querySelector('img').alt;
+    big.classList.toggle('fit', zoom.classList.contains('loop'));
     lightbox.showModal();
     return;
   }
