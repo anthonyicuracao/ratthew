@@ -30,8 +30,15 @@ document.addEventListener('click', (event) => {
     big.alt = zoom.querySelector('img').alt;
     big.classList.toggle('fit', zoom.classList.contains('loop'));
     lightbox.showModal();
+    document.documentElement.classList.add('locked');   // freeze the page behind the image
     return;
   }
 
-  if (event.target.closest('#lightbox')) lightbox.close();
+  if (event.target.closest('#lightbox')) {
+    lightbox.close();
+    document.documentElement.classList.remove('locked');
+  }
 });
+
+// The Esc key closes the viewer without a click, so unlock the page then too.
+lightbox.addEventListener('close', () => document.documentElement.classList.remove('locked'));

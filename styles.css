@@ -190,10 +190,12 @@ figcaption { margin-top: 8px; }
 .foot p { margin: 0; }
 
 /* ── Lightbox ── */
+html.locked { overflow: hidden; }   /* set while an image is open, so the page behind cannot scroll */
 #lightbox {
   border: 0; padding: 0; margin: 0; background: transparent;
   width: 100vw; height: 100dvh; max-width: none; max-height: none;
   cursor: zoom-out;
+  overscroll-behavior: contain; touch-action: none;
 }
 #lightbox[open] { display: grid; place-items: center; }
 #lightbox::backdrop { background: #000; }   /* solid, so nothing shows through see-through artwork */
